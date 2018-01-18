@@ -9,6 +9,7 @@
   "author": "Bowden Kelly",
   "license": "MIT",
   "scripts": {
+    "heroku-prebuild": "npm install node-sass",
     "heroku-postbuild": "npm run build",
     "start": "npm run serve",
     "build": "npm run build-sass && npm run build-ts && npm run tslint && npm run copy-static-assets",
@@ -47,8 +48,7 @@
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.4",
-    "request": "^2.83.0",
-    "node-sass": "^4.7.2"
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "@types/async": "^2.0.45",
