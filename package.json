@@ -9,7 +9,6 @@
   "author": "Bowden Kelly",
   "license": "MIT",
   "scripts": {
-    "heroku-postbuild": "npm run build",
     "start": "npm run serve",
     "build": "npm run build-sass && npm run build-ts && npm run tslint && npm run copy-static-assets",
     "serve": "node dist/server.js",
@@ -44,15 +43,11 @@
     "morgan": "^1.9.0",
     "node-sass": "^4.7.2",
     "nodemailer": "^4.4.1",
-    "typescript": "^2.6.2",
     "passport": "^0.4.0",
     "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "pug": "^2.0.0-rc.4",
-    "request": "^2.83.0",
-    "tslint": "^5.8.0",
-    "ts-node": "^4.0.2",
-    "shelljs": "^0.7.7"
+    "request": "^2.83.0"
   },
   "devDependencies": {
     "@types/async": "^2.0.45",
@@ -82,9 +77,11 @@
     "jest": "^21.2.1",
     "node-sass": "^4.7.2",
     "nodemon": "^1.13.0",
-
+    "shelljs": "^0.7.7",
     "supertest": "^3.0.0",
-    "ts-jest": "^21.2.4"
-
+    "ts-jest": "^21.2.4",
+    "ts-node": "^4.0.2",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
   }
 }
