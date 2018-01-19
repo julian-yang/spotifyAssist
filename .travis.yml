@@ -1,14 +1,17 @@
-
-{
-  "language": "node_js",
-  "node_js": "8",
-  "services": [
-  ],
-  "script": [
-    "npm run build",
-    "npm run test"
-  ],
-  "deploy":
-    "provider": "heroku",
-    "skip_cleanup": "true"
-}
+sudo: false
+language: node_js
+node_js:
+- stable
+script:
+- npm run build
+- npm run test
+after_success:
+- npm run report-coverage
+deploy:
+  provider: heroku
+  api_key:
+    secure: GxP1hIKFQnQ21zBeyIv9QuEbCgWVL1B8VQy+rWF4XeHUX/qEV52H1uStj9laiIwPL7HKtnjwY6e3qc4dbVFmXAS6rjET0GUnfgZErr1mE70EXmtAX9v/Mim/zZwVDmSsSYHinIxP2QnmQwiYBJpGnDG6LZ40PC1aTXPlp8oDQQvNa/WP2eT+ahBlS1bB1zpNmCvxvVh75CnG0EumK+20bgkAoxJI9jEO5vXan5UlEt9TMFE6uzCF90ZxkJLh/wMjYPDgYS0bu5sa5nbpaNMpBwCPENwUk26SIVnTill/R6s7YK2LF2cNvJFftZXY+RnlbPxqQJvSJys3zodXqhzrbKyxHDH73sGc3sFphgnsbkIny3W3/qBoMfvgSoBIIYgJT3Z2X3h883Z1i3SQmNgfVz2Um25KIUQvuEqOyde2P2vjN6cWs9itYpih7tNEik3fglsAFZZydCSZzIz292abjoAUaE8Njc6+R25n59mqZHlPYLfioXmI/Ahb1SaPsxunoi5sBqU7WgOK/ZaPgFCoc+i+y1NTrXsB7cxV4z/p3kN65NlkWDldCF0pR97+0o55xTGOPMhMXz+CUWuRKFY2a3sLtVqNvDAmt4nOXnWLKzVfo8a/fUaKdJndnVnohL4OT1Da0lIzwoRabv6uVtQ/o4EM7lNP9nG0MrIi8yz1xOw=
+  app: spotify-assist 
+  on:
+    repo: julian-yang/spotifyAssist
+  skip_cleanup: true

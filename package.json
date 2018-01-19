@@ -14,7 +14,7 @@
     "serve": "node dist/server.js",
     "watch-node": "nodemon dist/server.js",
     "watch": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run watch-node\"",
-    "test": "jest --forceExit --coverage --verbose",
+    "test": "nyc ./node_modules/.bin/ava -v",
     "build-ts": "tsc",
     "watch-ts": "tsc -w",
     "build-sass": "node-sass src/public/css/main.scss dist/public/css/main.css",
@@ -23,7 +23,9 @@
     "copy-static-assets": "ts-node copyStaticAssets.ts",
     "debug": "npm run build && npm run watch-debug",
     "serve-debug": "nodemon --inspect dist/server.js",
-    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\""
+    "watch-debug": "concurrently -k -p \"[{name}]\" -n \"Sass,TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-sass\" \"npm run watch-ts\" \"npm run serve-debug\"",
+    "report-coverage": "nyc report --reporter=lcov > coverage.lcov && codecov",
+    "standard": "standard index.js"
   },
   "dependencies": {
     "async": "^2.6.0",
@@ -81,6 +83,17 @@
     "ts-jest": "^21.2.4",
     "ts-node": "^4.0.2",
     "tslint": "^5.8.0",
-    "typescript": "^2.6.2"
+    "typescript": "^2.6.2",
+    "ava": "^0.16.0",
+    "co-exec": "^1.0",
+    "codecov": "^1.0.1",
+    "ghooks": "^1.2.4",
+    "nyc": "^10.0.0",
+    "standard": "^8.4.0"
+  },
+  "config": {
+    "ghooks": {
+      "pre-commit": "npm run standard"
+    }
   }
 }
