@@ -19,16 +19,17 @@ dotenv.config({path: '.env'});
 import * as homeController from './controllers/home';
 import * as apiController from './controllers/api';
 import * as contactController from './controllers/contact';
+//import * as authenticationController from './auth/authentication';
 
 // Load db
 import {sequelize} from './models/db';
+import * as User from './models/user';
 sequelize.sync();
-console.log('test');
-sequelize.models.User
-    .findOrCreate({where: {google_id: '1234'}, defaults: {google_id: '562'}})
-    .then(([user, created]) => {
-      console.log(user.get({plain: true}).google_id);
-    });
+//console.log('test');
+//sequelize.models.User.findOrCreate({where: {google_id: '1235'}})
+//    .spread((user: User.UserInstance, created: boolean) => {
+//      console.log(user.google_id);
+//    });
 
 // API keys and Passport configuration
 
@@ -38,7 +39,7 @@ const app = express();
 // Express configuration
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '../views'));
-app.set('view engine', 'pug');
+app.set('view engine', 'ejs');
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -52,26 +53,13 @@ app.use(session({
 app.use(flash());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
-app.use((req, res, next) => {
-  // After successful login, redirect back to the intended page
-  if (!req.user && req.path !== '/login' && req.path !== '/signup' &&
-      !req.path.match(/^\/auth/) && !req.path.match(/\./)) {
-    req.session.returnTo = req.path;
-  } else if (req.user && req.path === '/account') {
-    req.session.returnTo = req.path;
-  }
-  next();
-});
 app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
 
 /**
  * Primary app routes.
  */
 app.get('/', homeController.index);
+//app.get('/auth', authenticationController.router);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 

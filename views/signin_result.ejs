@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+<% include ../partials/nav.ejs %>
+
+<div class="container">
+<h2>Sign-in Results</h2>
+
+<ul>
+  <li>
+    Auth Code token:
+    <%= authCodeToken %>
+  </li>
+  <li>
+    State:
+    <%= state %>
+  </li>
+
+</ul>
+
+</div>
+
+</body>
+</html>

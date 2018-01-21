@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="459108910569-8g7sdom2iutcp2v2mvg1ab7hvkhm4c10.apps.googleusercontent.com">
+  <script src="/client-login.js"></script>
+</head>
+
+<body>
+
+<% include ../partials/nav.ejs %>
+
+<div class="container">
+<h2>Login to Google</h2>
+<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+
+</body>
+</html>

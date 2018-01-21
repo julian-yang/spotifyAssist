@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <% include ../partials/header.ejs %>
+</head>
+
+<body>
+
+<% include ../partials/nav.ejs %>
+
+<div class="container">
+<h2>Spotify Results</h2>
+
+<ul>
+  <li>
+    <%= name %>
+  </li>
+  <li>
+    <%= email %>
+  </li>
+  <li>
+    Google id: 
+    <%= googleId %>
+  </li>
+  <li>
+    accessToken: 
+    <%= accessToken %>
+  </li>
+  <li>
+    accessExpire: 
+    <%= accessExpire %>
+  </li>
+  <li>
+    refreshToken:
+    <%= refreshToken %>
+  </li>
+
+</ul>
+
+</div>
+
+</body>
+</html>
