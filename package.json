@@ -37,6 +37,7 @@
   "dependencies": {
     "@types/gapi": "0.0.35",
     "@types/sequelize": "^4.27.4",
+    "actions-on-google": "^1.7.0",
     "async": "^2.6.0",
     "bcrypt-nodejs": "^0.0.3",
     "bluebird": "^3.5.1",
@@ -71,6 +72,7 @@
     "typescript": "^2.6.2"
   },
   "devDependencies": {
+    "@types/actions-on-google": "^1.7.0",
     "@types/async": "^2.0.47",
     "@types/bcrypt-nodejs": "0.0.30",
     "@types/bluebird": "^3.5.19",

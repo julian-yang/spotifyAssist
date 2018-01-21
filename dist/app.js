@@ -16,6 +16,7 @@ const homeController = require("./controllers/home");
 const apiController = require("./controllers/api");
 const contactController = require("./controllers/contact");
 const authenticationController = require("./auth/authentication");
+const webhookController = require("./webhook/webhook");
 // Load db
 const db_1 = require("./models/db");
 db_1.sequelize.sync();
@@ -46,6 +47,7 @@ app.get('/', homeController.index);
 app.use('/auth', authenticationController.router);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
+app.get('/webhook', webhookController.test);
 /**
  * API examples routes.
  */

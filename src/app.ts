@@ -20,7 +20,7 @@ import * as homeController from './controllers/home';
 import * as apiController from './controllers/api';
 import * as contactController from './controllers/contact';
 import * as authenticationController from './auth/authentication';
-
+import * as webhookController from './webhook/webhook';
 // Load db
 import {sequelize} from './models/db';
 import * as User from './models/user';
@@ -56,6 +56,7 @@ app.get('/', homeController.index);
 app.use('/auth', authenticationController.router);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
+app.get('/webhook', webhookController.test)
 
 /**
  * API examples routes.
