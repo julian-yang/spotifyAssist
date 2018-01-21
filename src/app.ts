@@ -56,7 +56,7 @@ app.get('/', homeController.index);
 app.use('/auth', authenticationController.router);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
-app.get('/webhook', webhookController.test)
+app.post('/webhook', webhookController.test)
 
 /**
  * API examples routes.
