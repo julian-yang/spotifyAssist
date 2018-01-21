@@ -83,7 +83,7 @@ async function retrieveTokens(authCode: string): Promise<SpotifyTokens> {
     },
     json: true
   };
-  console.log(options.body);
+  console.log(options.form);
   const res = await request(options);
   // const res = await request.post(SPOTIFY_TOKEN_EXCHANGE, {form: })
   console.log(res);
