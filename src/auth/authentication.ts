@@ -4,7 +4,7 @@ import * as jwt from 'jsonwebtoken';
 
 import {GOOGLE_CALLBACK_URL, IS_DEV, TOKEN_TYPE} from '../config/constants';
 import * as db from '../models/db';
-
+import {URL} from 'url';
 import * as spotify from './spotify';
 import * as token from './token';
 
@@ -36,7 +36,7 @@ const redirectToGoogleSignin = (req: Request, res: Response) => {
 function testSignin(req: Request, res: Response): void {
   const hostName = req.hostname;
   const protocol = req.protocol;
-  const port = IS_DEV ? ':3000' : '';
+  const port = IS_DEV ? ':5000' : '';
   const redirectUrl = `${protocol}://${hostName}${port}/auth/signinResult`;
   const hrefUrl = `signin?client_id=google&redirect_uri=${redirectUrl}`;
   res.render('signin', {redirectUrl});
