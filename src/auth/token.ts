@@ -47,6 +47,7 @@ export function decryptTokenCode(tokenCode: string): Token {
   try {
     const verifiedToken =
         jwt.verify(tokenCode, process.env.JWT_TOKEN_SECRET) as Token;
+    verifiedToken.expiresAt = new Date(verifiedToken.expiresAt);
     return verifiedToken;
   } catch (err) {
     console.log(`err decrypting token: ${err}`);

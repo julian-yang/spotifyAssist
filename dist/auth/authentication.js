@@ -122,7 +122,7 @@ function isValidToken(token, clientId, expectedTokenType) {
     const validClientId = token.clientId === clientId;
     const validTokenType = token.type === expectedTokenType;
     const notExpired = expectedTokenType === constants_1.TOKEN_TYPE.AUTH_CODE ?
-        token.expiresAt.getDate() > Date.now() :
+        token.expiresAt.getTime() > Date.now() :
         true;
     return validClientId && validTokenType && notExpired;
 }

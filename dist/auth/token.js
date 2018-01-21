@@ -37,6 +37,7 @@ exports.generateTokenCode = generateTokenCode;
 function decryptTokenCode(tokenCode) {
     try {
         const verifiedToken = jwt.verify(tokenCode, process.env.JWT_TOKEN_SECRET);
+        verifiedToken.expiresAt = new Date(verifiedToken.expiresAt);
         return verifiedToken;
     }
     catch (err) {
