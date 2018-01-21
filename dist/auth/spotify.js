@@ -73,7 +73,7 @@ function retrieveTokens(authCode) {
             },
             json: true
         };
-        console.log(options.body);
+        console.log(options.form);
         const res = yield request(options);
         // const res = await request.post(SPOTIFY_TOKEN_EXCHANGE, {form: })
         console.log(res);
