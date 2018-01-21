@@ -1,5 +1,5 @@
-import * as fs from 'fs';
-import * as path from 'path';
+// import * as fs from 'fs';
+// import * as path from 'path';
 import * as SequelizeStatic from 'sequelize';
 import {Sequelize} from 'sequelize';
 
@@ -17,12 +17,12 @@ export interface SequelizeModels {
 }
 
 class Database {
-  private _basename: string;
+  // private _basename: string;
   private _models: SequelizeModels;
   private _sequelize: Sequelize;
 
   constructor() {
-    this._basename = path.basename(module.filename);
+    // this._basename = path.basename(module.filename);
     this._sequelize = new SequelizeStatic(process.env.DATABASE_URL, {
       dialect: 'postgres',
     });
@@ -41,5 +41,5 @@ class Database {
 
 const database = new Database();
 export const models = database.getModels();
-export const User = database.getModels().User;
+// export const User = database.getModels().User;
 export const sequelize = database.getSequelize();

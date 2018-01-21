@@ -58,7 +58,7 @@ async function signinPost(req: Request, res: Response) {
     console.log('googleId: ' + googleId);
     // fetch/create user.
     const user =
-        (await db.User.findOrCreate({where: {google_id: googleId}}))[0];
+        (await db.models.User.findOrCreate({where: {google_id: googleId}}))[0];
     const authFlowInfo: AuthFlowInfo =
         {userId: user.id, clientId: 'google', state, redirectUrl};
 
@@ -139,15 +139,23 @@ function isValidToken(
   return validClientId && validTokenType && notExpired;
 }
 
+interface TokenExchangeResponse {
+  token_type: string;
+  access_token: string;
+  expires_in: number;
+  refresh_token?: string;
+}
+
 function buildTokenExchangeResponse(
     userId: number, clientId: string, includeRefreshToken: boolean) {
-  const response = {} as any;
-  response['token_type'] = 'bearer';
-  response['access_token'] =
-      token.generateTokenCode(userId, clientId, TOKEN_TYPE.ACCESS_TOKEN);
-  response['expires_in'] = 60 * 60;
+  const response: TokenExchangeResponse = {
+    token_type: 'bearer',
+    access_token:
+        token.generateTokenCode(userId, clientId, TOKEN_TYPE.ACCESS_TOKEN),
+    expires_in: 60 * 60
+  };
   if (includeRefreshToken) {
-    response['refresh_token'] =
+    response.refresh_token =
         token.generateTokenCode(userId, clientId, TOKEN_TYPE.REFRESH_TOKEN);
   }
   return response;

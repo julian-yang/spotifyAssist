@@ -62,7 +62,7 @@ export async function processSpotifyLogin(req: Request, res: Response) {
   // update user
   const expiration = new Date(Date.now());
   expiration.setSeconds(expiration.getSeconds() + spotifyTokens.expires_in);
-  const user = await db.User.findById(userId);
+  const user = await db.models.User.findById(userId);
   user.spotify_access_token = spotifyTokens.access_token;
   user.spotify_access_token_expiration = expiration;
   user.spotify_refresh_token = spotifyTokens.refresh_token;

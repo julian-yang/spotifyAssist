@@ -19,14 +19,14 @@ dotenv.config({path: '.env'});
 import * as homeController from './controllers/home';
 import * as apiController from './controllers/api';
 import * as contactController from './controllers/contact';
-//import * as authenticationController from './auth/authentication';
+import * as authenticationController from './auth/authentication';
 
 // Load db
 import {sequelize} from './models/db';
 import * as User from './models/user';
 sequelize.sync();
-//console.log('test');
-//sequelize.models.User.findOrCreate({where: {google_id: '1235'}})
+// console.log('test');
+// sequelize.models.User.findOrCreate({where: {google_id: '1235'}})
 //    .spread((user: User.UserInstance, created: boolean) => {
 //      console.log(user.google_id);
 //    });
@@ -37,7 +37,7 @@ sequelize.sync();
 const app = express();
 
 // Express configuration
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 5000);
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs');
 app.use(compression());
@@ -59,7 +59,7 @@ app.use(express.static(path.join(__dirname, 'public'), {maxAge: 31557600000}));
  * Primary app routes.
  */
 app.get('/', homeController.index);
-//app.get('/auth', authenticationController.router);
+app.use('/auth', authenticationController.router);
 app.get('/contact', contactController.getContact);
 app.post('/contact', contactController.postContact);
 

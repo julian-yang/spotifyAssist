@@ -12,7 +12,7 @@ export enum TOKEN_TYPE {
 }
 
 const domain =
-    IS_DEV ? 'http://localhost:3000' : 'https://spotify-assist.herokuapp.com';
+    IS_DEV ? 'http://localhost:5000' : 'https://spotify-assist.herokuapp.com';
 
 export function generateUrl(route: string) {
   return `${domain}${route}`;
