@@ -4,7 +4,6 @@ const bodyParser = require("body-parser");
 const compression = require("compression"); // compresses requests
 const dotenv = require("dotenv");
 const express = require("express");
-const flash = require("express-flash");
 const expressValidator = require("express-validator");
 const lusca = require("lusca");
 const logger = require("morgan");
@@ -37,7 +36,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
-app.use(flash());
 app.use(lusca.xframe('SAMEORIGIN'));
 app.use(lusca.xssProtection(true));
 app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
