@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/controllers/api.ts</title>
+    <title>Code coverage report for src/models/db.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> api.ts
+      <a href="../../index.html">All files</a> / <a href="index.html">src/models</a> db.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>12/12</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -32,12 +32,12 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/1</span>
+        <span class='fraction'>3/3</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>12/12</span>
       </div>
     </div>
   </div>
@@ -78,14 +78,47 @@
 33
 34
 35
-36</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -100,55 +133,52 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// import * as fs from 'fs';
+// import * as path from 'path';
+import * as SequelizeStatic from 'sequelize';
+import {Sequelize} from 'sequelize';
 &nbsp;
-import * as async from 'async';
-import * as request from 'request';
-import * as graph from 'fbgraph';
-import {Response, Request, NextFunction} from 'express';
+console.log(`Using DB connection url: ${process.env.DATABASE_URL}`);
 &nbsp;
+// code adapted from
+// https://github.com/sequelize/express-example/blob/master/models/index.js and
+// https://blog.hobbytrace.com/using-sequelize-with-express-js-in-typescript/
+// and https://github.com/suksant/sequelize-typescript-examples/
 &nbsp;
-/**
- * GET /api
- * List of API examples.
- */
-export let getApi = (req: Request, res: Response) =&gt; {
-  res.render('api/index', {title: 'API Examples'});
-};
+import * as User from './user';
 &nbsp;
-/**
- * GET /api/facebook
- * Facebook API example.
- */
-// export let getFacebook = (req: Request, res: Response, next: NextFunction) =&gt;
-// {
-//   const token = req.user.tokens.find((token: {}) =&gt; token.kind ===
-//   'facebook'); graph.setAccessToken(token.accessToken); graph.get(
-//       `${
-//           req.user
-//               .facebook}?fields=id,name,email,first_name,last_name,gender,link,locale,timezone`,
-//       (err: Error, results: graph.FacebookUser) =&gt; {
-//         if (err) {
-//           return next(err);
-//         }
-//         res.render('api/facebook', {title: 'Facebook API', profile:
-//         results});
-//       });
-// };
-//</pre></td></tr>
+export interface SequelizeModels {
+  User: SequelizeStatic.Model&lt;User.UserInstance, User.UserAttributes&gt;;
+}
+&nbsp;
+class Database {
+  // private _basename: string;
+  private _models: SequelizeModels;
+  private _sequelize: Sequelize;
+&nbsp;
+  constructor() {
+    // this._basename = path.basename(module.filename);
+    this._sequelize = new SequelizeStatic(process.env.DATABASE_URL, {
+      dialect: 'postgres',
+    });
+    this._models = ({} as SequelizeModels);
+    this._models.User = User.defineUser(this._sequelize);
+  }
+&nbsp;
+  getModels() {
+    return this._models;
+  }
+&nbsp;
+  getSequelize() {
+    return this._sequelize;
+  }
+}
+&nbsp;
+const database = new Database();
+export const models = database.getModels();
+// export const User = database.getModels().User;
+export const sequelize = database.getSequelize();
+&nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->

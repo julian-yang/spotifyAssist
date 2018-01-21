@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/controllers/home.ts</title>
+    <title>Code coverage report for src/config/constants.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,28 +16,28 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> home.ts
+      <a href="../../index.html">All files</a> / <a href="index.html">src/config</a> constants.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>12/12</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">100% </span>
+        <span class="strong">75% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>3/4</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/1</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>12/12</span>
       </div>
     </div>
   </div>
@@ -52,25 +52,52 @@
 7
 8
 9
-10</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Request, Response} from 'express';
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export const IS_DEV = process.env.ENV === 'LOCAL';
 &nbsp;
-/**
- * GET /
- * Home page.
- */
-export let index = (req: Request, res: Response) =&gt; {
-  res.render('home', {title: 'Home'});
-};
-&nbsp;</pre></td></tr>
+export const GOOGLE_CALLBACK_URL = '';
+&nbsp;
+export const SPOTIFY_BASE_AUTHORIZATION_URL =
+    'https://accounts.spotify.com/authorize';
+export const SPOTIFY_TOKEN_EXCHANGE = 'https://accounts.spotify.com/api/token';
+export enum TOKEN_TYPE {
+  AUTH_CODE,
+  ACCESS_TOKEN,
+  REFRESH_TOKEN
+}
+<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+const domain =
+    IS_DEV ? 'http://localhost:5000' : 'https://spotify-assist.herokuapp.com';
+&nbsp;
+export function generateUrl(route: string) {
+  return `${domain}${route}`;
+}</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->

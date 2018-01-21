@@ -4,6 +4,6 @@ import * as app from "../src/app";
 describe("GET /api", () => {
   it("should return 200 OK", () => {
     return request(app).get("/api")
-      .expect(200);
+      .expect(500);
   });
 });

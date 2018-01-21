@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for src/controllers/api.ts</title>
+    <title>Code coverage report for src/models/user.ts</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -16,13 +16,13 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../../index.html">All files</a> / <a href="index.html">src/controllers</a> api.ts
+      <a href="../../index.html">All files</a> / <a href="index.html">src/models</a> user.ts
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>5/5</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
@@ -37,7 +37,7 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>5/5</span>
       </div>
     </div>
   </div>
@@ -72,20 +72,19 @@
 27
 28
 29
-30
-31
-32
-33
-34
-35
-36</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+30</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -102,53 +101,36 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as Sequelize from 'sequelize';
 &nbsp;
-import * as async from 'async';
-import * as request from 'request';
-import * as graph from 'fbgraph';
-import {Response, Request, NextFunction} from 'express';
+export interface UserAttributes {
+  google_id: string;
+  spotify_access_token?: string;
+  spotify_access_token_expiration?: Date;
+  spotify_refresh_token?: string;
+}
 &nbsp;
+export interface UserInstance extends Sequelize.Instance&lt;UserAttributes&gt; {
+  id: number;
+  createdAt: Date;
+  updatedAt: Date;
+  google_id: string;
+  spotify_access_token?: string;
+  spotify_access_token_expiration?: Date;
+  spotify_refresh_token?: string;
+}
 &nbsp;
-/**
- * GET /api
- * List of API examples.
- */
-export let getApi = (req: Request, res: Response) =&gt; {
-  res.render('api/index', {title: 'API Examples'});
-};
-&nbsp;
-/**
- * GET /api/facebook
- * Facebook API example.
- */
-// export let getFacebook = (req: Request, res: Response, next: NextFunction) =&gt;
-// {
-//   const token = req.user.tokens.find((token: {}) =&gt; token.kind ===
-//   'facebook'); graph.setAccessToken(token.accessToken); graph.get(
-//       `${
-//           req.user
-//               .facebook}?fields=id,name,email,first_name,last_name,gender,link,locale,timezone`,
-//       (err: Error, results: graph.FacebookUser) =&gt; {
-//         if (err) {
-//           return next(err);
-//         }
-//         res.render('api/facebook', {title: 'Facebook API', profile:
-//         results});
-//       });
-// };
-//</pre></td></tr>
+export function defineUser(sequelize: Sequelize.Sequelize) {
+  const user = sequelize.define&lt;UserInstance, UserAttributes&gt;(
+      'User', {
+        google_id: {type: Sequelize.TEXT, allowNull: false, unique: true},
+        spotify_access_token: Sequelize.TEXT,
+        spotify_access_token_expiration: Sequelize.DATE,
+        spotify_refresh_token: Sequelize.TEXT
+      },
+      {indexes: [{unique: true, fields: ['google_id']}]});
+  return user;
+}</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->

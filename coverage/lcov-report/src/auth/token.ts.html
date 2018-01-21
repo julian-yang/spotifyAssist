@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/auth/token.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/auth</a> token.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">31.25% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>10/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/5</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">31.25% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>10/32</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as crypto from 'crypto';
+import * as jwt from 'jsonwebtoken';
+&nbsp;
+import {TOKEN_TYPE} from '../config/constants';
+&nbsp;
+const TEN_MINUTES_IN_SECONDS = 10 * 60;
+const ONE_HOUR_IN_SECONDS = 60 * 60;
+<span class="fstat-no" title="function not covered" ></span>
+export function gen<span class="cstat-no" title="statement not covered" >erateRandomToken() {</span>
+  co<span class="cstat-no" title="statement not covered" >nst buffer = crypto.randomBytes(256);</span>
+  return crypto.createHash('sha1').update(buffer).digest('hex');
+}
+<span class="fstat-no" title="function not covered" ></span>
+export interface <span class="cstat-no" title="statement not covered" >Token {</span>
+  ty<span class="cstat-no" title="statement not covered" >pe: TOKEN_TYPE;</span>
+  us<span class="cstat-no" title="statement not covered" >erId: number;</span>
+  clientId: string;
+  expiresAt: Date;
+}<span class="fstat-no" title="function not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+expo<span class="cstat-no" title="statement not covered" >rt function getSecondsFromNow(seconds: number) {</span>
+  const <span class="cstat-no" title="statement not covered" >date = new Date(Date.now());</span>
+  date.setSeconds(date.getSeconds() + seconds);
+  return <span class="cstat-no" title="statement not covered" >date;</span>
+}<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+export function ge<span class="cstat-no" title="statement not covered" >nerateTokenCode(</span>
+    userId: number, clientId: string, type: TOKEN_TYPE) {
+  let expiresAt = null;
+  if (type === TOKEN_TYPE.AUTH_CODE) {
+    expiresAt = getSecondsFromNow(ONE_HOUR_IN_SECONDS);
+  } else if (type === TOKEN_TYPE.ACCESS_TOKEN) {
+    expiresAt = getSec<span class="cstat-no" title="statement not covered" >ondsFromNow(ONE_HOUR_IN_SECONDS);</span>
+  }<span class="cstat-no" title="statement not covered" ></span>
+  const token: Token = {
+    type,
+    userI<span class="fstat-no" title="function not covered" >d,</span>
+<span class="cstat-no" title="statement not covered" >    clientId,</span>
+    expiresAt,<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" ></span>
+  };
+  const tokenCode = jwt.sign(token, process.env.JWT_TOKEN_SECRET);
+  return<span class="cstat-no" title="statement not covered" > tokenCode;</span>
+}<span class="cstat-no" title="statement not covered" ></span>
+&nbsp;
+export function decryptTokenCode(tokenCode: string): Token {
+  try {
+    const<span class="fstat-no" title="function not covered" > verifiedToken =</span>
+        jwt.verify<span class="cstat-no" title="statement not covered" >(tokenCode, process.env.JWT_</span>TOKEN_SECRET) as Token;
+    return verifiedToke<span class="cstat-no" title="statement not covered" >n;</span>
+  } catch (err) {<span class="cstat-no" title="statement not covered" ></span>
+<span class="cstat-no" title="statement not covered" >    console.log(`err decrypting token: $</span>{err}`);
+    return err;
+  }
+}
+&nbsp;
+function verifyValidAccessToken(tokenCode: string) {
+  const token = decryptTokenCode(tokenCode);
+  const notExpired = token.expiresAt.getTime() &gt; Date.now();
+  const isAccessToken = token.type === TOKEN_TYPE.ACCESS_TOKEN;
+  return notExpired &amp;&amp; isAccessToken;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jan 21 2018 00:49:44 GMT-0800 (PST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

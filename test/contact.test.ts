@@ -4,12 +4,12 @@ import * as app from "../src/app";
 var chai = require('chai');
 var expect = chai.expect;
 
-describe("GET /contact", () => {
-  it("should return 200 OK", (done) => {
-    request(app).get("/contact")
-      .expect(200, done);
-  });
-});
+//describe("GET /contact", () => {
+//  it("should return 200 OK", (done) => {
+//    request(app).get("/contact")
+//      .expect(200, done);
+//  });
+//});
 
 
 describe("POST /contact", () => {

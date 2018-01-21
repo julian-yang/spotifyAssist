@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">65% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>13/20</span>
+        <span class='fraction'>12/20</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">25% </span>
@@ -30,14 +30,14 @@
         <span class='fraction'>1/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">66.67% </span>
+        <span class="strong">33.33% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/3</span>
+        <span class='fraction'>1/3</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">65% </span>
+        <span class="strong">60% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>13/20</span>
+        <span class='fraction'>12/20</span>
       </div>
     </div>
   </div>
@@ -92,11 +92,7 @@
 47
 48
 49
-50
-51
-52
-53
-54</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+50</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -107,13 +103,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -149,25 +140,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as nodemailer from "nodemailer";
-import { Request, Response } from "express";
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {Request, Response} from 'express';
+import * as nodemailer from 'nodemailer';
 &nbsp;
 const transporter = nodemailer.createTransport({
-  service: "SendGrid",
-  auth: {
-    user: process.env.SENDGRID_USER,
-    pass: process.env.SENDGRID_PASSWORD
-  }
+  service: 'SendGrid',
+  auth:
+      {user: process.env.SENDGRID_USER, pass: process.env.SENDGRID_PASSWORD}
 });
 &nbsp;
 /**
  * GET /contact
- * Contact form page.
- */
+ * Contact form page.<span class="fstat-no" title="function not covered" ></span>
+ */<span class="cstat-no" title="statement not covered" ></span>
 export let getContact = (req: Request, res: Response) =&gt; {
-  res.render("contact", {
-    title: "Contact"
-  });
+  res.render('contact', {title: 'Contact'});
 };
 &nbsp;
 /**
@@ -175,31 +163,31 @@ export let getContact = (req: Request, res: Response) =&gt; {
  * Send a contact form via Nodemailer.
  */
 export let postContact = (req: Request, res: Response) =&gt; {
-  req.assert("name", "Name cannot be blank").notEmpty();
-  req.assert("email", "Email is not valid").isEmail();
-  re<span class="missing-if-branch" title="else path not taken" >E</span>q.assert("message", "Message cannot be blank").notEmpty();
+  req.assert('name', 'Name cannot be blank').notEmpty();
+  re<span class="missing-if-branch" title="else path not taken" >E</span>q.assert('email', 'Email is not valid').isEmail();
+  req.assert('message', 'Message cannot be blank').notEmpty();
 &nbsp;
   const errors = req.validationErrors();
-&nbsp;
-  if (errors) {<span class="cstat-no" title="statement not covered" ></span>
-    req.flash("errors", errors);
-    return res.redirect("/contact");
+<span class="cstat-no" title="statement not covered" ></span>
+  if (errors) {
+    req.flash('errors', errors);
+    return res.redirect('/contact');
   }
 &nbsp;
-  const mailOptions = {
-<span class="cstat-no" title="statement not covered" >    to: "your@email.com",<span class="fstat-no" title="function not covered" ></span></span>
-    from<span class="cstat-no" title="statement not covered" >: `${req.body.name} &lt;${req.body.email}&gt;`,</span>
-    subject:<span class="cstat-no" title="statement not covered" > "Contact Form",</span>
-    text: re<span class="cstat-no" title="statement not covered" >q.body.message</span>
-  };
+  co<span class="cstat-no" title="statement not covered" >nst mailOptions = {<span class="fstat-no" title="function not covered" ></span></span>
+    to: <span class="cstat-no" title="statement not covered" >'your@email.com',</span>
+    from: `$<span class="cstat-no" title="statement not covered" >{req.body.name} &lt;${req.body.email}&gt;`,</span>
+    subject:<span class="cstat-no" title="statement not covered" > 'Contact Form',</span>
+    text: req.body.message
+  };<span class="cstat-no" title="statement not covered" ></span>
 <span class="cstat-no" title="statement not covered" ></span>
-  transp<span class="cstat-no" title="statement not covered" >orter.sendMail(mailOptions</span>, (err) =&gt; {
+  transporter.sendMail(mailOptions, (err) =&gt; {
     if (err) {
-      req.flash("errors", { msg: err.message });
-      return res.redirect("/contact");
+      req.flash('errors', {msg: err.message});
+      return res.redirect('/contact');
     }
-    req.flash("success", { msg: "Email has been sent successfully!" });
-    res.redirect("/contact");
+    req.flash('success', {msg: 'Email has been sent successfully!'});
+    res.redirect('/contact');
   });
 };
 &nbsp;</pre></td></tr>
@@ -208,7 +196,7 @@ export let postContact = (req: Request, res: Response) =&gt; {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Jan 19 2018 01:05:40 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Jan 21 2018 00:49:44 GMT-0800 (PST)
 </div>
 </div>
 <script src="../../prettify.js"></script>

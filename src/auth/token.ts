@@ -1,5 +1,6 @@
-import * as jwt from 'jsonwebtoken';
 import * as crypto from 'crypto';
+import * as jwt from 'jsonwebtoken';
+
 import {TOKEN_TYPE} from '../config/constants';
 
 const TEN_MINUTES_IN_SECONDS = 10 * 60;
@@ -17,11 +18,7 @@ export interface Token {
   expiresAt: Date;
 }
 
-export interface TokenWrapper {
-  token: Token
-}
-
-export function getSecondsFromNow(seconds:number) {
+export function getSecondsFromNow(seconds: number) {
   const date = new Date(Date.now());
   date.setSeconds(date.getSeconds() + seconds);
   return date;
@@ -49,8 +46,8 @@ export function generateTokenCode(
 export function decryptTokenCode(tokenCode: string): Token {
   try {
     const verifiedToken =
-        jwt.verify(tokenCode, process.env.JWT_TOKEN_SECRET) as TokenWrapper;
-    return verifiedToken.token;
+        jwt.verify(tokenCode, process.env.JWT_TOKEN_SECRET) as Token;
+    return verifiedToken;
   } catch (err) {
     console.log(`err decrypting token: ${err}`);
     return err;

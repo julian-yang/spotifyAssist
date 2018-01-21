@@ -1,10 +1,11 @@
 import {NextFunction, Request, Response, Router} from 'express';
 import {OAuth2Client} from 'google-auth-library';
 import * as jwt from 'jsonwebtoken';
+import {URL} from 'url';
 
 import {GOOGLE_CALLBACK_URL, IS_DEV, TOKEN_TYPE} from '../config/constants';
 import * as db from '../models/db';
-import {URL} from 'url';
+
 import * as spotify from './spotify';
 import * as token from './token';
 
@@ -90,9 +91,7 @@ export interface AuthFlowInfo {
   redirectUrl: string;
 }
 
-export interface AuthFlowInfoWrapper {
-  authFlowInfo: AuthFlowInfo;
-}
+export interface AuthFlowInfoWrapper { authFlowInfo: AuthFlowInfo; }
 
 export async function returnAuthCode(
     authCodeInfo: AuthFlowInfo, res: Response) {

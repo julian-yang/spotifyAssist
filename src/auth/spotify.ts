@@ -35,8 +35,7 @@ const spotifyScopes = [
 const spotifyRedirectUri = constants.generateUrl('/auth/spotifyCallback');
 
 export function loginSpotify(authFlowInfo: AuthFlowInfo, res: Response) {
-  const state =
-      jwt.sign(authFlowInfo, process.env.JWT_TOKEN_SECRET);
+  const state = jwt.sign(authFlowInfo, process.env.JWT_TOKEN_SECRET);
   console.log(`authorizing Spotify for user id ${authFlowInfo.userId}`);
   const queryString = querystring.stringify({
     client_id: process.env.SPOTIFY_CLIENT_ID,
@@ -86,7 +85,7 @@ async function retrieveTokens(authCode: string): Promise<SpotifyTokens> {
   };
   console.log(options.body);
   const res = await request(options);
-  //const res = await request.post(SPOTIFY_TOKEN_EXCHANGE, {form: })
+  // const res = await request.post(SPOTIFY_TOKEN_EXCHANGE, {form: })
   console.log(res);
   return res as SpotifyTokens;
 }
