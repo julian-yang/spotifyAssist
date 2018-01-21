@@ -1,4 +1,4 @@
-export const IS_DEV = process.env.NODE_ENV === 'development';
+export const IS_DEV = process.env.ENV === 'LOCAL';
 
 export const GOOGLE_CALLBACK_URL = '';
 

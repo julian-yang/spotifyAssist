@@ -35,6 +35,7 @@
     "posttest": "npm run check"
   },
   "dependencies": {
+    "@types/gapi": "0.0.35",
     "@types/sequelize": "^4.27.4",
     "async": "^2.6.0",
     "bcrypt-nodejs": "^0.0.3",

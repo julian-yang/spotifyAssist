@@ -17,6 +17,10 @@ export interface Token {
   expiresAt: Date;
 }
 
+export interface TokenWrapper {
+  token: Token
+}
+
 export function getSecondsFromNow(seconds:number) {
   const date = new Date(Date.now());
   date.setSeconds(date.getSeconds() + seconds);
@@ -45,8 +49,8 @@ export function generateTokenCode(
 export function decryptTokenCode(tokenCode: string): Token {
   try {
     const verifiedToken =
-        jwt.verify(tokenCode, process.env.JWT_TOKEN_SECRET) as Token;
-    return verifiedToken;
+        jwt.verify(tokenCode, process.env.JWT_TOKEN_SECRET) as TokenWrapper;
+    return verifiedToken.token;
   } catch (err) {
     console.log(`err decrypting token: ${err}`);
     return err;

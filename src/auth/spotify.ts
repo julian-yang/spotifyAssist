@@ -11,7 +11,7 @@ import * as db from '../models/db';
 import {UserInstance} from '../models/user';
 
 import * as authentication from './authentication';
-import {AuthFlowInfo} from './authentication';
+import {AuthFlowInfo, AuthFlowInfoWrapper} from './authentication';
 
 interface SpotifyState {
   user_google_id: string;
@@ -36,7 +36,7 @@ const spotifyRedirectUri = constants.generateUrl('/auth/spotifyCallback');
 
 export function loginSpotify(authFlowInfo: AuthFlowInfo, res: Response) {
   const state =
-      jwt.sign({authCodeInfo: authFlowInfo}, process.env.JWT_TOKEN_SECRET);
+      jwt.sign(authFlowInfo, process.env.JWT_TOKEN_SECRET);
   console.log(`authorizing Spotify for user id ${authFlowInfo.userId}`);
   const queryString = querystring.stringify({
     client_id: process.env.SPOTIFY_CLIENT_ID,
@@ -46,7 +46,7 @@ export function loginSpotify(authFlowInfo: AuthFlowInfo, res: Response) {
     scope: spotifyScopes.join(' '),
     show_dialog: true
   });
-  const spotifyAuthUrl = `${SPOTIFY_BASE_AUTHORIZATION_URL}${queryString}`;
+  const spotifyAuthUrl = `${SPOTIFY_BASE_AUTHORIZATION_URL}/?${queryString}`;
   console.log(`Redirecting to Spotify Auth url: ${spotifyAuthUrl}`);
   res.redirect(spotifyAuthUrl);
 }
@@ -71,19 +71,22 @@ export async function processSpotifyLogin(req: Request, res: Response) {
 }
 
 async function retrieveTokens(authCode: string): Promise<SpotifyTokens> {
-  const queryString = querystring.stringify({
-    client_id: process.env.SPOTIFY_CLIENT_ID,
-    client_secret: process.env.SPOTIFY_CLIENT_SECRET
-  });
+  console.log(authCode);
   const options: (UriOptions&RequestPromiseOptions) = {
     uri: SPOTIFY_TOKEN_EXCHANGE,
-    formData: {
+    method: 'POST',
+    form: {
       grant_type: 'authorization_code',
       code: authCode,
-      redirect_uri: spotifyRedirectUri
+      redirect_uri: spotifyRedirectUri,
+      client_id: process.env.SPOTIFY_CLIENT_ID,
+      client_secret: process.env.SPOTIFY_CLIENT_SECRET
     },
-    qs: queryString
+    json: true
   };
+  console.log(options.body);
   const res = await request(options);
+  //const res = await request.post(SPOTIFY_TOKEN_EXCHANGE, {form: })
+  console.log(res);
   return res as SpotifyTokens;
 }

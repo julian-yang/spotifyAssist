@@ -90,6 +90,10 @@ export interface AuthFlowInfo {
   redirectUrl: string;
 }
 
+export interface AuthFlowInfoWrapper {
+  authFlowInfo: AuthFlowInfo;
+}
+
 export async function returnAuthCode(
     authCodeInfo: AuthFlowInfo, res: Response) {
   // build redirect url
