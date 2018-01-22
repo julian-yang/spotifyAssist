@@ -45,6 +45,7 @@ function verifyWebhookRequest(accessToken) {
             return db.models.User.findById(verifiedToken.userId);
         }
         else {
+            console.log(`verifyWebhookRequest for accessToken ${accessToken} failed! ${JSON.stringify(verifiedToken)}`);
             return null;
         }
     });
@@ -70,6 +71,7 @@ function enableShufflePlaybackIntent(app) {
         const user = app.getUser();
         try {
             const dbUser = yield verifyWebhookRequest(user.accessToken);
+            console.log('user from enableShufflePlayback ' + JSON.stringify(dbUser));
             yield spotifyApi_1.enableShufflePlayback(dbUser);
             app.tell('ok');
         }

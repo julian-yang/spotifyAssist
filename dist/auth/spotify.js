@@ -87,6 +87,7 @@ function retrieveTokens(authCode) {
 function maybeRefreshAccessToken(user) {
     return __awaiter(this, void 0, void 0, function* () {
         //await user.reload();
+        console.log('user: ' + JSON.stringify(user));
         console.log('trying to check for user: ' + JSON.stringify(user.get({ plain: true })));
         // No need to refresh if at least 5 seconds left on access token.
         if (user.spotify_access_token_expiration.getTime() > getTimeSecondsFromNow(5).getTime()) {

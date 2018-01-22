@@ -40,6 +40,7 @@ async function verifyWebhookRequest(accessToken:string) {
   if (valid) {
     return db.models.User.findById(verifiedToken.userId);
   } else {
+    console.log(`verifyWebhookRequest for accessToken ${accessToken} failed! ${JSON.stringify(verifiedToken)}`);
     return null;
   }
 }
@@ -63,6 +64,7 @@ async function enableShufflePlaybackIntent(app:DialogflowApp) {
   const user = app.getUser();
   try {
     const dbUser = await verifyWebhookRequest(user.accessToken);
+    console.log('user from enableShufflePlayback ' + JSON.stringify(dbUser));
     await enableShufflePlayback(dbUser);
     app.tell('ok');
   } catch (err) {
