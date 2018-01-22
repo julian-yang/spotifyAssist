@@ -96,7 +96,8 @@ async function retrieveTokens(authCode: string): Promise<SpotifyTokens> {
 }
 
 export async function maybeRefreshAccessToken(user:UserInstance) {
-  await user.reload();
+  //await user.reload();
+  console.log('trying to check for user: ' + JSON.stringify(user.get({plain: true})));
   // No need to refresh if at least 5 seconds left on access token.
   if (user.spotify_access_token_expiration.getTime() > getTimeSecondsFromNow(5).getTime()) {
     return;
@@ -120,6 +121,7 @@ export async function maybeRefreshAccessToken(user:UserInstance) {
   console.log(spotifyTokens);
   user.spotify_access_token = spotifyTokens.access_token;
   user.spotify_access_token_expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
+  console.log('attempting to save user: ' + JSON.stringify(user.get({plain: true})));
   await user.save();
-  // await user.reload();
+  //await user.reload();
 }

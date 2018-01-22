@@ -86,7 +86,8 @@ function retrieveTokens(authCode) {
 }
 function maybeRefreshAccessToken(user) {
     return __awaiter(this, void 0, void 0, function* () {
-        yield user.reload();
+        //await user.reload();
+        console.log('trying to check for user: ' + JSON.stringify(user.get({ plain: true })));
         // No need to refresh if at least 5 seconds left on access token.
         if (user.spotify_access_token_expiration.getTime() > getTimeSecondsFromNow(5).getTime()) {
             return;
@@ -109,8 +110,9 @@ function maybeRefreshAccessToken(user) {
         console.log(spotifyTokens);
         user.spotify_access_token = spotifyTokens.access_token;
         user.spotify_access_token_expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
+        console.log('attempting to save user: ' + JSON.stringify(user.get({ plain: true })));
         yield user.save();
-        // await user.reload();
+        //await user.reload();
     });
 }
 exports.maybeRefreshAccessToken = maybeRefreshAccessToken;
