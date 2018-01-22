@@ -36,7 +36,7 @@ export function test(req:Request, res:Response) {
 
 async function verifyWebhookRequest(accessToken:string) {
   const verifiedToken = decryptTokenCode(accessToken);
-  const valid = isValidToken(verifiedToken, 'google', TOKEN_TYPE.AUTH_CODE);
+  const valid = isValidToken(verifiedToken, 'google', TOKEN_TYPE.ACCESS_TOKEN);
   if (valid) {
     return db.models.User.findById(verifiedToken.userId);
   } else {
@@ -51,7 +51,7 @@ async function welcomeIntent (app:DialogflowApp) {
     const dbUser = await verifyWebhookRequest(user.accessToken);
     console.log('googleid: ' + dbUser.google_id + ' spotify access token: ' + dbUser.spotify_access_token);
     const spotifyUserObject = await spotifyApi.getMe(dbUser);
-    app.tell(`Welcome to Spotify Assist, ${spotifyUserObject.display_name}!`);
+    app.ask(`Welcome to Spotify Assist, ${spotifyUserObject.display_name}! Speak a command.`);
   } catch (err) {
     console.log(err);
     app.tell(INVALID_TOKEN_MESSAGE);

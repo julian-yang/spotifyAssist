@@ -40,7 +40,7 @@ exports.test = test;
 function verifyWebhookRequest(accessToken) {
     return __awaiter(this, void 0, void 0, function* () {
         const verifiedToken = token_1.decryptTokenCode(accessToken);
-        const valid = authentication_1.isValidToken(verifiedToken, 'google', constants_1.TOKEN_TYPE.AUTH_CODE);
+        const valid = authentication_1.isValidToken(verifiedToken, 'google', constants_1.TOKEN_TYPE.ACCESS_TOKEN);
         if (valid) {
             return db.models.User.findById(verifiedToken.userId);
         }
@@ -57,7 +57,7 @@ function welcomeIntent(app) {
             const dbUser = yield verifyWebhookRequest(user.accessToken);
             console.log('googleid: ' + dbUser.google_id + ' spotify access token: ' + dbUser.spotify_access_token);
             const spotifyUserObject = yield spotifyApi.getMe(dbUser);
-            app.tell(`Welcome to Spotify Assist, ${spotifyUserObject.display_name}!`);
+            app.ask(`Welcome to Spotify Assist, ${spotifyUserObject.display_name}! Speak a command.`);
         }
         catch (err) {
             console.log(err);
