@@ -25,8 +25,9 @@ export async function getMe(user:UserInstance) {
 export async function enableShufflePlayback(user:UserInstance) {
   const endpointUrl = '/v1/me/player/shuffle'
   const queryString = querystring.stringify({
-    state: true
+    state: 'true'
   });
+  console.log(`queryString: ${queryString}`);
   const res = await sendApiPutRequest(user, endpointUrl, queryString);
   console.log('from enableShufflePlayback: ' + res);
 }

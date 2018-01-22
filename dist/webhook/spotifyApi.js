@@ -25,8 +25,9 @@ function enableShufflePlayback(user) {
     return __awaiter(this, void 0, void 0, function* () {
         const endpointUrl = '/v1/me/player/shuffle';
         const queryString = querystring.stringify({
-            state: true
+            state: 'true'
         });
+        console.log(`queryString: ${queryString}`);
         const res = yield sendApiPutRequest(user, endpointUrl, queryString);
         console.log('from enableShufflePlayback: ' + res);
     });
