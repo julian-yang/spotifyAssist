@@ -3,12 +3,16 @@ import {NextFunction, Request, Response, Router} from 'express';
 import * as db from '../models/db';
 import {UserInstance} from '../models/user';
 import * as token from '../auth/token';
+import { decryptTokenCode } from "../auth/token";
 
 const WELCOME_INTENT = 'input.welcome';  // the action name from the Dialogflow intent
 const TURN_ON_SHUFFLE = 'playback.shuffle.on';
-function welcomeIntent (app:DialogflowApp) {
+async function welcomeIntent (app:DialogflowApp) {
   const user = app.getUser();
   console.log(`Access Token: ${user.accessToken}`);
+  const verifiedToken = decryptTokenCode(user.accessToken);
+  const dbUser = await db.models.User.findById(verifiedToken.userId);
+  console.log('googleid: ' + dbUser.google_id + ' spotify access token: ' + dbUser.spotify_access_token);
   //await token.decryptTokenCode(accessToken);
   app.tell('Welcome to Spotify Assist TS, hooray!');
 }

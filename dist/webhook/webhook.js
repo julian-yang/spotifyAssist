@@ -1,13 +1,28 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const actions_on_google_1 = require("actions-on-google");
+const db = require("../models/db");
+const token_1 = require("../auth/token");
 const WELCOME_INTENT = 'input.welcome'; // the action name from the Dialogflow intent
 const TURN_ON_SHUFFLE = 'playback.shuffle.on';
 function welcomeIntent(app) {
-    const user = app.getUser();
-    console.log(`Access Token: ${user.accessToken}`);
-    //await token.decryptTokenCode(accessToken);
-    app.tell('Welcome to Spotify Assist TS, hooray!');
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = app.getUser();
+        console.log(`Access Token: ${user.accessToken}`);
+        const verifiedToken = token_1.decryptTokenCode(user.accessToken);
+        const dbUser = yield db.models.User.findById(verifiedToken.userId);
+        console.log('googleid: ' + dbUser.google_id + ' spotify access token: ' + dbUser.spotify_access_token);
+        //await token.decryptTokenCode(accessToken);
+        app.tell('Welcome to Spotify Assist TS, hooray!');
+    });
 }
 const actionMap = new Map();
 actionMap.set(WELCOME_INTENT, welcomeIntent);
