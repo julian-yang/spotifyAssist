@@ -24,15 +24,15 @@ export async function getMe(user:UserInstance) {
 
 export async function enableShufflePlayback(user:UserInstance) {
   const endpointUrl = '/v1/me/player/shuffle'
-  const queryString = querystring.stringify({
-    state: 'true'
-  });
+  const queryString = {
+    state: true
+  };
   console.log(`queryString: ${queryString}`);
   const res = await sendApiPutRequest(user, endpointUrl, queryString);
   console.log('from enableShufflePlayback: ' + res);
 }
 
-async function sendApiPutRequest(user:UserInstance, endpointUrl:string, queryString:string) {
+async function sendApiPutRequest(user:UserInstance, endpointUrl:string, queryString:object) {
   maybeRefreshAccessToken(user);
   const options: (UriOptions&RequestPromiseOptions) = {
     uri: SPOTIFY_WEB_API_BASE_URL + endpointUrl,

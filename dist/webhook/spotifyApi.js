@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const querystring = require("query-string");
 const request = require("request-promise");
 const constants_1 = require("../config/constants");
 const spotify_1 = require("../auth/spotify");
@@ -24,9 +23,9 @@ exports.getMe = getMe;
 function enableShufflePlayback(user) {
     return __awaiter(this, void 0, void 0, function* () {
         const endpointUrl = '/v1/me/player/shuffle';
-        const queryString = querystring.stringify({
-            state: 'true'
-        });
+        const queryString = {
+            state: true
+        };
         console.log(`queryString: ${queryString}`);
         const res = yield sendApiPutRequest(user, endpointUrl, queryString);
         console.log('from enableShufflePlayback: ' + res);
