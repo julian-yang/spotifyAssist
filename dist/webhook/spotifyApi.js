@@ -28,7 +28,7 @@ function enableShufflePlayback(user) {
             state: true
         });
         const res = yield sendApiPutRequest(user, endpointUrl, queryString);
-        console.log(res);
+        console.log('from enableShufflePlayback: ' + res);
     });
 }
 exports.enableShufflePlayback = enableShufflePlayback;
