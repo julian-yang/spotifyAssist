@@ -16,7 +16,7 @@ const TURN_ON_SHUFFLE = 'playback.shuffle.on';
 
 const actionMap = new Map();
 actionMap.set(WELCOME_INTENT, welcomeIntent);
-actionMap.set(TURN_ON_SHUFFLE, enableShufflePlayback);
+actionMap.set(TURN_ON_SHUFFLE, enableShufflePlaybackIntent);
 
 export function test(req:Request, res:Response) {
   // let authorization = req.header('Authorization');

@@ -20,7 +20,7 @@ const WELCOME_INTENT = 'input.welcome'; // the action name from the Dialogflow i
 const TURN_ON_SHUFFLE = 'playback.shuffle.on';
 const actionMap = new Map();
 actionMap.set(WELCOME_INTENT, welcomeIntent);
-actionMap.set(TURN_ON_SHUFFLE, spotifyApi_1.enableShufflePlayback);
+actionMap.set(TURN_ON_SHUFFLE, enableShufflePlaybackIntent);
 function test(req, res) {
     // let authorization = req.header('Authorization');
     // console.log(authorization);
