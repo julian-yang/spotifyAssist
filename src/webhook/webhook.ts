@@ -1,9 +1,15 @@
 import {DialogflowApp} from "actions-on-google";
 import {NextFunction, Request, Response, Router} from 'express';
+import * as db from '../models/db';
+import {UserInstance} from '../models/user';
+import * as token from '../auth/token';
 
 const WELCOME_INTENT = 'input.welcome';  // the action name from the Dialogflow intent
-
+const TURN_ON_SHUFFLE = 'playback.shuffle.on';
 function welcomeIntent (app:DialogflowApp) {
+  const accessToken = app.getArgument('accessToken');
+  console.log(`Access Token: ${accessToken}`);
+  //await token.decryptTokenCode(accessToken);
   app.tell('Welcome to Spotify Assist TS, hooray!');
 }
 

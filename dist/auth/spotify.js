@@ -47,8 +47,7 @@ function processSpotifyLogin(req, res) {
         const userId = authFlowInfo.userId;
         const spotifyTokens = yield retrieveTokens(code);
         // update user
-        const expiration = new Date(Date.now());
-        expiration.setSeconds(expiration.getSeconds() + spotifyTokens.expires_in);
+        const expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
         const user = yield db.models.User.findById(userId);
         user.spotify_access_token = spotifyTokens.access_token;
         user.spotify_access_token_expiration = expiration;
@@ -58,6 +57,11 @@ function processSpotifyLogin(req, res) {
     });
 }
 exports.processSpotifyLogin = processSpotifyLogin;
+function getTimeSecondsFromNow(seconds) {
+    const now = new Date(Date.now());
+    now.setSeconds(now.getSeconds() + seconds);
+    return now;
+}
 function retrieveTokens(authCode) {
     return __awaiter(this, void 0, void 0, function* () {
         console.log(authCode);
@@ -80,4 +84,29 @@ function retrieveTokens(authCode) {
         return res;
     });
 }
+function refreshAccessToken(user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        yield user.reload();
+        const clientId = process.env.SPOTIFY_CLIENT_ID;
+        const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+        const options = {
+            uri: constants_1.SPOTIFY_TOKEN_EXCHANGE,
+            method: 'POST',
+            form: {
+                grant_type: 'refresh_token',
+                refresh_token: user.spotify_refresh_token
+            },
+            headers: {
+                Authorization: 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
+            }
+        };
+        const spotifyTokens = yield request(options);
+        console.log(spotifyTokens);
+        user.spotify_access_token = spotifyTokens.access_token;
+        user.spotify_access_token_expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
+        yield user.save();
+        yield user.reload();
+    });
+}
+exports.refreshAccessToken = refreshAccessToken;
 //# sourceMappingURL=spotify.js.map

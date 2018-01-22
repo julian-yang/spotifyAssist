@@ -22,7 +22,7 @@ interface SpotifyTokens {
   token_type: string;
   scope: string;
   expires_in: number;
-  refresh_token: string;
+  refresh_token?: string;
 }
 
 const spotifyScopes = [
@@ -59,14 +59,19 @@ export async function processSpotifyLogin(req: Request, res: Response) {
   const userId = authFlowInfo.userId;
   const spotifyTokens = await retrieveTokens(code);
   // update user
-  const expiration = new Date(Date.now());
-  expiration.setSeconds(expiration.getSeconds() + spotifyTokens.expires_in);
+  const expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
   const user = await db.models.User.findById(userId);
   user.spotify_access_token = spotifyTokens.access_token;
   user.spotify_access_token_expiration = expiration;
   user.spotify_refresh_token = spotifyTokens.refresh_token;
   await user.save();
   authentication.returnAuthCode(authFlowInfo, res);
+}
+
+function getTimeSecondsFromNow(seconds:number) { 
+  const now = new Date(Date.now());
+  now.setSeconds(now.getSeconds() + seconds);
+  return now;
 }
 
 async function retrieveTokens(authCode: string): Promise<SpotifyTokens> {
@@ -88,4 +93,27 @@ async function retrieveTokens(authCode: string): Promise<SpotifyTokens> {
   // const res = await request.post(SPOTIFY_TOKEN_EXCHANGE, {form: })
   console.log(res);
   return res as SpotifyTokens;
+}
+
+export async function refreshAccessToken(user:UserInstance) {
+  await user.reload();
+  const clientId = process.env.SPOTIFY_CLIENT_ID;
+  const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
+  const options: (UriOptions&RequestPromiseOptions) = {
+    uri: SPOTIFY_TOKEN_EXCHANGE,
+    method: 'POST',
+    form: {
+      grant_type: 'refresh_token',
+      refresh_token: user.spotify_refresh_token
+    },
+    headers: {
+      Authorization: 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
+    }
+  }
+  const spotifyTokens = await request(options) as SpotifyTokens;
+  console.log(spotifyTokens);
+  user.spotify_access_token = spotifyTokens.access_token;
+  user.spotify_access_token_expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
+  await user.save();
+  await user.reload();
 }

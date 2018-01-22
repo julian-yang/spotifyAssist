@@ -2,7 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const actions_on_google_1 = require("actions-on-google");
 const WELCOME_INTENT = 'input.welcome'; // the action name from the Dialogflow intent
+const TURN_ON_SHUFFLE = 'playback.shuffle.on';
 function welcomeIntent(app) {
+    const accessToken = app.getArgument('accessToken');
+    console.log(`Access Token: ${accessToken}`);
+    //await token.decryptTokenCode(accessToken);
     app.tell('Welcome to Spotify Assist TS, hooray!');
 }
 const actionMap = new Map();
