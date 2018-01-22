@@ -7,8 +7,8 @@ import * as token from '../auth/token';
 const WELCOME_INTENT = 'input.welcome';  // the action name from the Dialogflow intent
 const TURN_ON_SHUFFLE = 'playback.shuffle.on';
 function welcomeIntent (app:DialogflowApp) {
-  const accessToken = app.getArgument('accessToken');
-  console.log(`Access Token: ${accessToken}`);
+  const user = app.getUser();
+  console.log(`Access Token: ${user.accessToken}`);
   //await token.decryptTokenCode(accessToken);
   app.tell('Welcome to Spotify Assist TS, hooray!');
 }
