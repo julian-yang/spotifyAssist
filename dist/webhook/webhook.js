@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const actions_on_google_1 = require("actions-on-google");
 const db = require("../models/db");
 const token_1 = require("../auth/token");
+const spotifyApi = require("./spotifyApi");
 const WELCOME_INTENT = 'input.welcome'; // the action name from the Dialogflow intent
 const TURN_ON_SHUFFLE = 'playback.shuffle.on';
 function welcomeIntent(app) {
@@ -20,8 +21,9 @@ function welcomeIntent(app) {
         const verifiedToken = token_1.decryptTokenCode(user.accessToken);
         const dbUser = yield db.models.User.findById(verifiedToken.userId);
         console.log('googleid: ' + dbUser.google_id + ' spotify access token: ' + dbUser.spotify_access_token);
+        const spotifyUserObject = yield spotifyApi.getMe(dbUser);
         //await token.decryptTokenCode(accessToken);
-        app.tell('Welcome to Spotify Assist TS, hooray!');
+        app.tell(`Welcome to Spotify Assist, ${spotifyUserObject.display_name}!`);
     });
 }
 const actionMap = new Map();

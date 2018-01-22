@@ -3,7 +3,8 @@ import {NextFunction, Request, Response, Router} from 'express';
 import * as db from '../models/db';
 import {UserInstance} from '../models/user';
 import * as token from '../auth/token';
-import { decryptTokenCode } from "../auth/token";
+import { decryptTokenCode } from '../auth/token';
+import * as spotifyApi from './spotifyApi';
 
 const WELCOME_INTENT = 'input.welcome';  // the action name from the Dialogflow intent
 const TURN_ON_SHUFFLE = 'playback.shuffle.on';
@@ -13,8 +14,9 @@ async function welcomeIntent (app:DialogflowApp) {
   const verifiedToken = decryptTokenCode(user.accessToken);
   const dbUser = await db.models.User.findById(verifiedToken.userId);
   console.log('googleid: ' + dbUser.google_id + ' spotify access token: ' + dbUser.spotify_access_token);
+  const spotifyUserObject = await spotifyApi.getMe(dbUser);
   //await token.decryptTokenCode(accessToken);
-  app.tell('Welcome to Spotify Assist TS, hooray!');
+  app.tell(`Welcome to Spotify Assist, ${spotifyUserObject.display_name}!`);
 }
 
 const actionMap = new Map();

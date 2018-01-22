@@ -96,6 +96,7 @@ function refreshAccessToken(user) {
                 grant_type: 'refresh_token',
                 refresh_token: user.spotify_refresh_token
             },
+            json: true,
             headers: {
                 Authorization: 'Basic ' + new Buffer(clientId + ':' + clientSecret).toString('base64')
             }

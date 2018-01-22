@@ -22,7 +22,7 @@ function getMe(user) {
         // send request
         const options = {
             uri: constants_1.SPOTIFY_WEB_API_BASE_URL + endpointUrl,
-            method: 'POST',
+            method: 'GET',
             headers: {
                 Authorization: 'Bearer ' + user.spotify_access_token
             },

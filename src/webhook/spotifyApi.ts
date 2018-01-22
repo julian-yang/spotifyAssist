@@ -24,7 +24,7 @@ export async function getMe(user:UserInstance) {
   // send request
   const options: (UriOptions&RequestPromiseOptions) = {
     uri: SPOTIFY_WEB_API_BASE_URL + endpointUrl,
-    method: 'POST',
+    method: 'GET',
     headers: {
       Authorization: 'Bearer ' + user.spotify_access_token
     },
