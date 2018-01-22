@@ -8,18 +8,48 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const querystring = require("query-string");
 const request = require("request-promise");
 const constants_1 = require("../config/constants");
-const spotifyAuthentication = require("../auth/spotify");
+const spotify_1 = require("../auth/spotify");
 function getMe(user) {
     return __awaiter(this, void 0, void 0, function* () {
         const endpointUrl = '/v1/me';
         // check if user's access token is expired
-        if (user.spotify_access_token_expiration.getTime() < Date.now()) {
-            // refresh access token
-            yield spotifyAuthentication.refreshAccessToken(user);
-        }
-        // send request
+        const res = yield sendApiGetRequest(user, endpointUrl);
+        return res;
+    });
+}
+exports.getMe = getMe;
+function enableShufflePlayback(user) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const endpointUrl = '/v1/me/player/shuffle';
+        const queryString = querystring.stringify({
+            state: true
+        });
+        const res = yield sendApiPutRequest(user, endpointUrl, queryString);
+        console.log(res);
+    });
+}
+exports.enableShufflePlayback = enableShufflePlayback;
+function sendApiPutRequest(user, endpointUrl, queryString) {
+    return __awaiter(this, void 0, void 0, function* () {
+        spotify_1.maybeRefreshAccessToken(user);
+        const options = {
+            uri: constants_1.SPOTIFY_WEB_API_BASE_URL + endpointUrl,
+            method: 'PUT',
+            headers: {
+                Authorization: 'Bearer ' + user.spotify_access_token
+            },
+            qs: queryString
+        };
+        const res = yield request(options);
+        return res;
+    });
+}
+function sendApiGetRequest(user, endpointUrl) {
+    return __awaiter(this, void 0, void 0, function* () {
+        spotify_1.maybeRefreshAccessToken(user);
         const options = {
             uri: constants_1.SPOTIFY_WEB_API_BASE_URL + endpointUrl,
             method: 'GET',
@@ -32,5 +62,4 @@ function getMe(user) {
         return res;
     });
 }
-exports.getMe = getMe;
 //# sourceMappingURL=spotifyApi.js.map

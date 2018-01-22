@@ -84,9 +84,13 @@ function retrieveTokens(authCode) {
         return res;
     });
 }
-function refreshAccessToken(user) {
+function maybeRefreshAccessToken(user) {
     return __awaiter(this, void 0, void 0, function* () {
         yield user.reload();
+        // No need to refresh if at least 5 seconds left on access token.
+        if (user.spotify_access_token_expiration.getTime() > getTimeSecondsFromNow(5).getTime()) {
+            return;
+        }
         const clientId = process.env.SPOTIFY_CLIENT_ID;
         const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
         const options = {
@@ -109,5 +113,5 @@ function refreshAccessToken(user) {
         yield user.reload();
     });
 }
-exports.refreshAccessToken = refreshAccessToken;
+exports.maybeRefreshAccessToken = maybeRefreshAccessToken;
 //# sourceMappingURL=spotify.js.map

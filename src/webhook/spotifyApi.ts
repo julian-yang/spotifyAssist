@@ -12,16 +12,41 @@ import {UserInstance} from '../models/user';
 
 import * as authentication from '../auth/authentication';
 import * as spotifyAuthentication from '../auth/spotify';
+import { maybeRefreshAccessToken } from '../auth/spotify';
 
 
 export async function getMe(user:UserInstance) {
-  const endpointUrl = '/v1/me';
+  const endpointUrl =  '/v1/me';
   // check if user's access token is expired
-  if (user.spotify_access_token_expiration.getTime() < Date.now()) {
-    // refresh access token
-    await spotifyAuthentication.refreshAccessToken(user);
-  }
-  // send request
+  const res = await sendApiGetRequest(user, endpointUrl) as SpotifyApi.UserObjectPrivate;
+  return res;
+}
+
+export async function enableShufflePlayback(user:UserInstance) {
+  const endpointUrl = '/v1/me/player/shuffle'
+  const queryString = querystring.stringify({
+    state: true
+  });
+  const res = await sendApiPutRequest(user, endpointUrl, queryString);
+  console.log(res);
+}
+
+async function sendApiPutRequest(user:UserInstance, endpointUrl:string, queryString:string) {
+  maybeRefreshAccessToken(user);
+  const options: (UriOptions&RequestPromiseOptions) = {
+    uri: SPOTIFY_WEB_API_BASE_URL + endpointUrl,
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + user.spotify_access_token
+    },
+    qs: queryString
+  };
+  const res = await request(options);
+  return res;
+}
+
+async function sendApiGetRequest(user:UserInstance, endpointUrl:string) {
+  maybeRefreshAccessToken(user);
   const options: (UriOptions&RequestPromiseOptions) = {
     uri: SPOTIFY_WEB_API_BASE_URL + endpointUrl,
     method: 'GET',
@@ -30,7 +55,7 @@ export async function getMe(user:UserInstance) {
     },
     json: true
   };
-  const res = await request(options);
-  return res as SpotifyApi.UserObjectPrivate;
+  const res = await request(options);  
+  return res;
 }
 

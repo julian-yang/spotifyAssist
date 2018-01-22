@@ -95,8 +95,13 @@ async function retrieveTokens(authCode: string): Promise<SpotifyTokens> {
   return res as SpotifyTokens;
 }
 
-export async function refreshAccessToken(user:UserInstance) {
+export async function maybeRefreshAccessToken(user:UserInstance) {
   await user.reload();
+  // No need to refresh if at least 5 seconds left on access token.
+  if (user.spotify_access_token_expiration.getTime() > getTimeSecondsFromNow(5).getTime()) {
+    return;
+  }
+
   const clientId = process.env.SPOTIFY_CLIENT_ID;
   const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
   const options: (UriOptions&RequestPromiseOptions) = {

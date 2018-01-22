@@ -132,7 +132,7 @@ function exchangeToken(req: Request, res: Response) {
   }
 }
 
-function isValidToken(
+export function isValidToken(
     token: token.Token, clientId: string, expectedTokenType: TOKEN_TYPE) {
   const validClientId = token.clientId === clientId;
   const validTokenType = token.type === expectedTokenType;

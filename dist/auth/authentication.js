@@ -126,6 +126,7 @@ function isValidToken(token, clientId, expectedTokenType) {
         true;
     return validClientId && validTokenType && notExpired;
 }
+exports.isValidToken = isValidToken;
 function buildTokenExchangeResponse(userId, clientId, includeRefreshToken) {
     const response = {
         token_type: 'bearer',
