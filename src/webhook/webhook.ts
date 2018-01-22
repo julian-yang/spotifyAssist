@@ -40,7 +40,8 @@ async function verifyWebhookRequest(accessToken:string) {
   if (valid) {
     return db.models.User.findById(verifiedToken.userId);
   } else {
-    console.log(`verifyWebhookRequest for accessToken ${accessToken} failed! ${JSON.stringify(verifiedToken)}`);
+    console.log(`verifyWebhookRequest for accessToken ${accessToken} failed! `);
+    console.log(JSON.stringify(verifiedToken));
     return null;
   }
 }
