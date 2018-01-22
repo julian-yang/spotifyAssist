@@ -110,7 +110,7 @@ function maybeRefreshAccessToken(user) {
         user.spotify_access_token = spotifyTokens.access_token;
         user.spotify_access_token_expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
         yield user.save();
-        yield user.reload();
+        // await user.reload();
     });
 }
 exports.maybeRefreshAccessToken = maybeRefreshAccessToken;

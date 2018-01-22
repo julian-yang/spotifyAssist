@@ -121,5 +121,5 @@ export async function maybeRefreshAccessToken(user:UserInstance) {
   user.spotify_access_token = spotifyTokens.access_token;
   user.spotify_access_token_expiration = getTimeSecondsFromNow(spotifyTokens.expires_in);
   await user.save();
-  await user.reload();
+  // await user.reload();
 }
